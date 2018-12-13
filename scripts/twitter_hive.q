@@ -44,3 +44,11 @@ INSERT OVERWRITE TABLE tweetword_join SELECT tweet_words.created_date, tweet_wor
 CREATE TABLE IF NOT EXISTS afinn_prediction (created_date date, created_hour int, symbol string, rating double);
 
 INSERT OVERWRITE TABLE afinn_prediction SELECT created_date, created_hour,symbol,AVG(rating) as rating from tweetword_join GROUP BY created_date, created_hour, symbol;
+
+CREATE TABLE IF NOT EXISTS final_goodness(created_date date, created_hour int, symbol string, stocktwit_sentiment int, stanford_sentiment double, afinn_sentiment double);
+
+INSERT OVERWRITE TABLE final_goodness
+SELECT a.created_date as created_date, a.created_hour as created_hour, a.symbol as symbol, a.prediction as stocktwit_sentiment, b.prediction as stanford_sentiment, c.rating as afinn_sentiment 
+FROM stocktwit_prediction a JOIN stanford_prediction b 
+ON a.created_date = b.created_date and a.created_hour = b.created_hour and a.symbol=b.symbol JOIN afinn_prediction c 
+ON a.created_date = c.created_date and a.created_hour = c.created_hour and a.symbol=c.symbol;
