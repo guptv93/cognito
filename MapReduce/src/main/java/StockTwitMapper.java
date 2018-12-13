@@ -41,21 +41,6 @@ public class StockTwitMapper extends Mapper<LongWritable, Text, Text, Text> {
 
 
         if(!partitionTime.equals(twitTime)) return;
-
-//        try {
-//                cal.setTime(sdfInput.parse(rawDate));
-//        } catch (ParseException e) {
-//            System.out.println("Caught Exception - " + e);
-//        }
-//	    String formattedDate = sdfPartition.format(cal.getTime());
-//        int hours = cal.get(Calendar.HOUR_OF_DAY);
-//        int partitionNum;
-//        if (0 <= hours && hours< 6) partitionNum = 1;
-//        else if (6 <= hours && hours< 12) partitionNum = 2;
-//        else if (12 <= hours && hours< 18) partitionNum = 3;
-//        else partitionNum = 4;
-//        String partition = formattedDate + "-Q" + partitionNum;
-
         String[] newSplits = Arrays.copyOfRange(splits, 1, splits.length);
         String formattedLine = createdAtET + "||" + String.join("||", newSplits);
         formattedLine = cleanTweet(formattedLine);

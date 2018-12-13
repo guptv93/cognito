@@ -17,14 +17,6 @@ def convert_json_to_csv():
         sentiment = None
         if message.get('entities') and message.get('entities').get('sentiment'):
             sentiment = message.get('entities').get('sentiment').get('basic')
-        # links = []
-        # if 'links' in message:
-        #     links = []
-        #     for link in message['links']:
-        #         abc = {}
-        #         abc['title'] = link.get('title')
-        #         abc['description'] = link.get('description')
-        #         links.append(abc)
         line_to_write = created + "||" + str(id) + "||" + str(symbol) + "||" + body\
 		+ "||" + str(sentiment) + "||" + user_name + "||" + str(user_official) + "||" + str(user_followers) 
         file.write(line_to_write + "\n")
